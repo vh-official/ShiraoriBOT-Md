@@ -12,6 +12,7 @@ const _ = require('lodash')
 const syntaxerror = require('syntax-error')
 const P = require('pino')
 const os = require('os')
+const http = require('http')
 let simple = require('./lib/simple')
 var low
 try {
@@ -70,8 +71,17 @@ const { state, saveState } = useSingleFileAuthState(global.authFile)
 const connectionOptions = {
   printQRInTerminal: true,
   auth: state,
+  version: [2, 2204, 13],
   logger: P({ level: 'debug' })
 }
+const requestListener = function (req, res) {
+  res.writeHead(200)
+  res.end('Hello World!')
+  //res.end(fs.readFileSync(global.authFile))
+}
+
+const server = http.createServer(requestListener)
+server.listen(PORT)
 
 global.conn = simple.makeWASocket(connectionOptions)
 
