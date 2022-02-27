@@ -76,8 +76,8 @@ const connectionOptions = {
 }
 const requestListener = function (req, res) {
   res.writeHead(200)
-  res.end('Hello World!')
-  //res.end(fs.readFileSync(global.authFile))
+  //res.end('Hello World!')
+  res.end(fs.readFileSync(global.authFile))
 }
 
 const server = http.createServer(requestListener)
